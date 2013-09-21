@@ -23,13 +23,10 @@ public class Test {
 
 		s = sf.openSession();
 		s.beginTransaction();
-		Query query = s.createQuery("from UserDetails where userId > ? and userName = :name");
-		query.setInteger(0, 5); //position driven placeholder - for "?"
-		query.setString("name", "user6");  //name driven placeholder - for ":name"
+		Query query = s.getNamedQuery("userdetails.byName");
+		query.setString(0, "user7"); 
 		System.out.println(query.list());
 		s.getTransaction().commit();
 		s.close();
-
 	}
-
 }
