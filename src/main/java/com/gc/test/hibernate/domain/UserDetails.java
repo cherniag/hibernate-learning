@@ -3,11 +3,12 @@ package com.gc.test.hibernate.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,7 +21,10 @@ public class UserDetails {
 	@Column(name = "USER_NAME")
 	private String userName;
 	
-	@ManyToMany
+	@OneToMany(cascade={
+			CascadeType.PERSIST,
+			CascadeType.REMOVE
+			})
 	private Collection<Vehicle> vehicles = new ArrayList<Vehicle>();
 	
 	public int getUserId() {
@@ -45,7 +49,8 @@ public class UserDetails {
 	@Override
 	public String toString() {
 		return "UserDetails [userId=" + userId + ", userName=" + userName
-				+ ", vehicle=" + vehicles + "]";
+				//+ ", vehicle=" + vehicles 
+				+"]";
 	}
 
 }

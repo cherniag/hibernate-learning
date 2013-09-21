@@ -17,21 +17,19 @@ public class Test {
 		user.getVehicles().add(vehicle1);
 		Vehicle vehicle2 = new Vehicle("Jeep");
 		user.getVehicles().add(vehicle2);
-		vehicle1.getUserDetails().add(user);
-		vehicle2.getUserDetails().add(user);
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
 		Session s = sf.openSession();
 		Transaction transaction = s.beginTransaction();
-		int id = (Integer) s.save(user);
-		s.save(vehicle1);
-		s.save(vehicle2);
+		s.persist(user);
+//		s.save(vehicle1);
+//		s.save(vehicle2);
 		transaction.commit();
 		s.close();
 		
 		
 		s = sf.openSession();
 		s.beginTransaction();
-		UserDetails retreived = (UserDetails) s.get(UserDetails.class, id);
+		UserDetails retreived = (UserDetails) s.get(UserDetails.class, 1);
 		System.out.println(retreived);
 		s.getTransaction().commit();
 		s.close();
@@ -39,8 +37,9 @@ public class Test {
 		//if(true)return;
 		s = sf.openSession();
 		s.beginTransaction();
-		retreived = (UserDetails) s.get(UserDetails.class, id);
+		retreived = (UserDetails) s.get(UserDetails.class, 1);
 		s.delete(retreived);
+		//retreived.getVehicles().clear();
 		s.getTransaction().commit();
 		s.close();
 	}

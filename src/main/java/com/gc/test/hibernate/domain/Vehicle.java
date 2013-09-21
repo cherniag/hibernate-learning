@@ -1,13 +1,9 @@
 package com.gc.test.hibernate.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 @Entity
 public class Vehicle {
@@ -18,8 +14,10 @@ public class Vehicle {
 	
 	@Column(name="NAME")
 	private String vehicleName;
-	@ManyToMany(mappedBy="vehicles")
-	private Collection<UserDetails> userDetails=new ArrayList<UserDetails>();
+	
+	/*@ManyToOne
+	@NotFound(action=NotFoundAction.IGNORE)
+	private UserDetails userDetails;*/
 	
 	public Vehicle() {
 	}
@@ -47,11 +45,11 @@ public class Vehicle {
 				+ vehicleName + "]";
 	}
 
-	public Collection<UserDetails> getUserDetails() {
+	/*public UserDetails getUserDetails() {
 		return userDetails;
 	}
 
-	public void setUserDetails(Collection<UserDetails> userDetails) {
+	public void setUserDetails(UserDetails userDetails) {
 		this.userDetails = userDetails;
-	}
+	}*/
 }
