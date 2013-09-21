@@ -1,14 +1,13 @@
 package com.gc.test.hibernate;
 
-import static org.hibernate.criterion.Restrictions.*;
-
 import java.io.IOException;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 
 import com.gc.test.hibernate.domain.UserDetails;
 
@@ -29,13 +28,21 @@ public class Test {
 		s = sf.openSession();
 		s.beginTransaction();
 		Criteria criteria = s.createCriteria(UserDetails.class); // = " from UserDetails "
-		//criteria.add(eq("userName", "user10"));     // = " where userName = 'user10' "
-		criteria.add(
-				or(
-						eq("userName", "user4"),
-						eq("userName", "user10")
-				   )
-				);     // = " where userName = 'user10' or userName = 'user4' "
+		/*
+		 		Projections.max("userId")
+		 		Projections.count("userId")
+		 		Projections.property("userId")  = select userId from UserDetails
+		 		Projections.property("userId")
+		 				   .setOrder(Order.desc("userId")); = select userId from UserDetails order by userId desc
+		 */
+		criteria.setProjection(Projections.property("userId"))
+				.addOrder(Order.desc("userId")); // Projections.max("userId")
+		
+		/*criteria.add(like("userName", "user%"))
+				  .add(gt("userId", 6));     // = " where userName like 'user%' AND userId > 6"
+		*/
+		
+		
 		System.out.println(criteria.list());
 		s.getTransaction().commit();
 		s.close();
