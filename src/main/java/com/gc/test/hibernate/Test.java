@@ -23,16 +23,9 @@ public class Test {
 
 		s = sf.openSession();
 		s.beginTransaction();
-		/*
-		 	select userName from UserDetails					- list of String
-		 	select userName, userId from UserDetails 			- list of Object[]
-		 	select max(userName) from UserDetails				- max userName - user9
-		 	select new UserDetails(userName) from UserDetails   - list of UserDetails (can be others classes with 
-		 															constructors)
-		*/
-		Query query = s.createQuery("from UserDetails");
-		query.setFirstResult(0);// start from
-		query.setMaxResults(3); // results count
+		Query query = s.createQuery("from UserDetails where userId > ? and userName = :name");
+		query.setInteger(0, 5); //position driven placeholder - for "?"
+		query.setString("name", "user6");  //name driven placeholder - for ":name"
 		System.out.println(query.list());
 		s.getTransaction().commit();
 		s.close();
