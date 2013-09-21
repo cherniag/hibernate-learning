@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Vehicle {
@@ -14,6 +15,9 @@ public class Vehicle {
 	
 	@Column(name="NAME")
 	private String vehicleName;
+	
+	@ManyToOne
+	private UserDetails userDetails;
 	
 	public Vehicle() {
 	}
@@ -39,5 +43,13 @@ public class Vehicle {
 	public String toString() {
 		return "Vehicle [vehicleId=" + vehicleId + ", vehicleName="
 				+ vehicleName + "]";
+	}
+
+	public UserDetails getUserDetails() {
+		return userDetails;
+	}
+
+	public void setUserDetails(UserDetails userDetails) {
+		this.userDetails = userDetails;
 	}
 }

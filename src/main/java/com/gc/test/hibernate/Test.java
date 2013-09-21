@@ -13,14 +13,18 @@ public class Test {
 	@SuppressWarnings({"deprecation"})
 	public static void main(String[] args) {
 		UserDetails user = new UserDetails().setUserName("johnsmith");
-		Vehicle vehicle = new Vehicle("Car");
-		user.setVehicle(vehicle);
-		
+		Vehicle vehicle1 = new Vehicle("Car");
+		user.getVehicles().add(vehicle1);
+		Vehicle vehicle2 = new Vehicle("Jeep");
+		user.getVehicles().add(vehicle2);
+		vehicle1.setUserDetails(user);
+		vehicle2.setUserDetails(user);
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
 		Session s = sf.openSession();
 		Transaction transaction = s.beginTransaction();
 		int id = (Integer) s.save(user);
-		//s.save(vehicle);
+		s.save(vehicle1);
+		s.save(vehicle2);
 		transaction.commit();
 		s.close();
 		
@@ -32,6 +36,7 @@ public class Test {
 		s.getTransaction().commit();
 		s.close();
 		
+		if(true)return;
 		s = sf.openSession();
 		s.beginTransaction();
 		retreived = (UserDetails) s.get(UserDetails.class, id);
