@@ -1,11 +1,19 @@
 package com.gc.test.hibernate.domain;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="TYPE", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorValue("Veh")
 public class Vehicle {
 	@Id
 	@GeneratedValue
@@ -14,10 +22,6 @@ public class Vehicle {
 	
 	@Column(name="NAME")
 	private String vehicleName;
-	
-	/*@ManyToOne
-	@NotFound(action=NotFoundAction.IGNORE)
-	private UserDetails userDetails;*/
 	
 	public Vehicle() {
 	}
@@ -45,11 +49,4 @@ public class Vehicle {
 				+ vehicleName + "]";
 	}
 
-	/*public UserDetails getUserDetails() {
-		return userDetails;
-	}
-
-	public void setUserDetails(UserDetails userDetails) {
-		this.userDetails = userDetails;
-	}*/
 }
