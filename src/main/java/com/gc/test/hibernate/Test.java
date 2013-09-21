@@ -17,8 +17,8 @@ public class Test {
 		user.getVehicles().add(vehicle1);
 		Vehicle vehicle2 = new Vehicle("Jeep");
 		user.getVehicles().add(vehicle2);
-		vehicle1.setUserDetails(user);
-		vehicle2.setUserDetails(user);
+		vehicle1.getUserDetails().add(user);
+		vehicle2.getUserDetails().add(user);
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
 		Session s = sf.openSession();
 		Transaction transaction = s.beginTransaction();
@@ -36,7 +36,7 @@ public class Test {
 		s.getTransaction().commit();
 		s.close();
 		
-		if(true)return;
+		//if(true)return;
 		s = sf.openSession();
 		s.beginTransaction();
 		retreived = (UserDetails) s.get(UserDetails.class, id);
