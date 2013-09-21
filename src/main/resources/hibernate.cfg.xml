@@ -15,9 +15,7 @@
 		<!-- Echo all executed SQL to stdout -->
 		<property name="show_sql">true</property>
 		<!-- create | update -->
-		<property name="hbm2ddl.auto">create</property> 
-		<mapping class="com.gc.test.hibernate.domain.Vehicle" />
-		<mapping class="com.gc.test.hibernate.domain.TwoWeelerVehicle" />
-		<mapping class="com.gc.test.hibernate.domain.FourWeelerVehicle" />
+		<property name="hbm2ddl.auto">update</property> 
+		<mapping class="com.gc.test.hibernate.domain.UserDetails" />
 	</session-factory>
 </hibernate-configuration>

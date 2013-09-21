@@ -1,49 +1,42 @@
 package com.gc.test.hibernate;
 
+import java.io.IOException;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.gc.test.hibernate.domain.FourWeelerVehicle;
-import com.gc.test.hibernate.domain.TwoWeelerVehicle;
-import com.gc.test.hibernate.domain.Vehicle;
-
 public class Test {
+	@SuppressWarnings({ "deprecation" })
+	private static SessionFactory sf = new Configuration().configure()
+			.buildSessionFactory();
 
-	@SuppressWarnings({"deprecation"})
-	public static void main(String[] args) {
-		Vehicle vehicle = new Vehicle("Car");
-		
-		TwoWeelerVehicle twoWeelerVehicle = new TwoWeelerVehicle();
-		twoWeelerVehicle.setVechicleName("bike");
-		twoWeelerVehicle.setSteeringHandle("handle");
-		
-		FourWeelerVehicle fourWeelerVehicle = new FourWeelerVehicle();
-		fourWeelerVehicle.setVechicleName("bus");
-		fourWeelerVehicle.setSteeringWheel("wheel");
-		
-		SessionFactory sf = new Configuration().configure().buildSessionFactory();
-		Session s = sf.openSession();
-		Transaction transaction = s.beginTransaction();
-		s.persist(vehicle);
-		s.persist(twoWeelerVehicle);
-		s.persist(fourWeelerVehicle);
-		transaction.commit();
-		s.close();
-		
-		
-		
-		
+	public static void main(String[] args) throws IOException {
+
+		Session s /*
+				 * = sf.openSession(); s.beginTransaction(); for(int
+				 * i=0;i<10;i++){ UserDetails user = new
+				 * UserDetails().setUserName("user" + i); s.save(user); }
+				 * s.getTransaction().commit(); s.close()
+				 */;
+
 		s = sf.openSession();
 		s.beginTransaction();
-		//System.out.println(s.createQuery("from Vehicle").list());
-		Vehicle retreived = (Vehicle) s.get(Vehicle.class, 3);
-		System.out.println(retreived);
+		/*
+		 	select userName from UserDetails					- list of String
+		 	select userName, userId from UserDetails 			- list of Object[]
+		 	select max(userName) from UserDetails				- max userName - user9
+		 	select new UserDetails(userName) from UserDetails   - list of UserDetails (can be others classes with 
+		 															constructors)
+		*/
+		Query query = s.createQuery("from UserDetails");
+		query.setFirstResult(0);// start from
+		query.setMaxResults(3); // results count
+		System.out.println(query.list());
 		s.getTransaction().commit();
 		s.close();
+
 	}
 
-	
 }
-
