@@ -37,7 +37,7 @@ public class Test {
 		
 		s = sf.openSession();
 		s.beginTransaction();
-		System.out.println(s.createQuery("from Vehicle").list());
+		//System.out.println(s.createQuery("from Vehicle").list());
 		Vehicle retreived = (Vehicle) s.get(Vehicle.class, 3);
 		System.out.println(retreived);
 		s.getTransaction().commit();

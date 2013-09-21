@@ -10,7 +10,7 @@ import javax.persistence.InheritanceType;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Vehicle {
 	@Id
 	@GeneratedValue(generator="hilo-gen")
