@@ -7,7 +7,6 @@ import org.hibernate.cfg.Configuration;
 
 import com.gc.test.hibernate.domain.FourWeelerVehicle;
 import com.gc.test.hibernate.domain.TwoWeelerVehicle;
-import com.gc.test.hibernate.domain.UserDetails;
 import com.gc.test.hibernate.domain.Vehicle;
 
 public class Test {
@@ -30,8 +29,6 @@ public class Test {
 		s.persist(vehicle);
 		s.persist(twoWeelerVehicle);
 		s.persist(fourWeelerVehicle);
-//		s.save(vehicle1);
-//		s.save(vehicle2);
 		transaction.commit();
 		s.close();
 		

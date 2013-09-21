@@ -1,22 +1,20 @@
 package com.gc.test.hibernate.domain;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="TYPE", discriminatorType=DiscriminatorType.STRING)
-@DiscriminatorValue("Veh")
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Vehicle {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator="hilo-gen")
+	@GenericGenerator(name="hilo-gen", strategy="hilo")
 	@Column(name="ID")
 	private int vehicleId;
 	

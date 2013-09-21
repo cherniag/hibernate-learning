@@ -16,7 +16,6 @@
 		<property name="show_sql">true</property>
 		<!-- create | update -->
 		<property name="hbm2ddl.auto">create</property> 
-		<mapping class="com.gc.test.hibernate.domain.UserDetails" />
 		<mapping class="com.gc.test.hibernate.domain.Vehicle" />
 		<mapping class="com.gc.test.hibernate.domain.TwoWeelerVehicle" />
 		<mapping class="com.gc.test.hibernate.domain.FourWeelerVehicle" />

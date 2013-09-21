@@ -1,10 +1,8 @@
 package com.gc.test.hibernate.domain;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("4w")
 public class FourWeelerVehicle extends Vehicle {
 	private String steeringWheel;
 
