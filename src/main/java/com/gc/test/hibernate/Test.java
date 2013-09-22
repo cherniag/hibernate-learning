@@ -2,13 +2,10 @@ package com.gc.test.hibernate;
 
 import java.io.IOException;
 
-import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Example;
-
-import com.gc.test.hibernate.domain.UserDetails;
 
 public class Test {
 	@SuppressWarnings({ "deprecation" })
@@ -24,18 +21,19 @@ public class Test {
 				 */;
 		s = sf.openSession();
 		s.beginTransaction();
+
+		Query query = s.createQuery("from UserDetails user where user.userId = 2");
+		query.setCacheable(true);//need to be cacheable
+		query.list();
 		
-		UserDetails exampleUserDetails = new UserDetails();
-		/* 
-		 	exampleUserDetails.setUserId(5) - Hibernate ignores @Id and null values
-		 	exampleUserDetails.setUserName("user1%") = LIKE 'user1%' //need Example.create(...).enableLike();
-		 */
-		exampleUserDetails.setUserName("user1%"); 
-		Example example = Example.create(exampleUserDetails).enableLike();
-		Criteria criteria = s.createCriteria(UserDetails.class);
-		criteria.add(example);
+		s.getTransaction().commit();
+		s.close();
 		
-		System.out.println(criteria.list());
+		s = sf.openSession();
+		s.beginTransaction();
+		Query query2 = s.createQuery("from UserDetails user where user.userId = 2");
+		query2.setCacheable(true);//need to be cacheable
+		query2.list();//only 1 select
 		s.getTransaction().commit();
 		s.close();
 	}
